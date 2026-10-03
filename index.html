@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sales &amp; Lead Follow-up Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#0E1E33; --muted:#566478; --line:#DCE2EA; --line2:#EBEFF4;
+  --brand:#14507A; --brand2:#2477A8; --brand-soft:#E3EEF6;
+  --crit:#C23A2B; --crit-soft:#FBE9E6; --warn:#B26B00; --warn-soft:#FDF0D8; --ok:#1B8458; --ok-soft:#DFF3EA;
+  --gold:#E9A91C;
+  --h0:#E8EDF3; --h1:#C6DAEA; --h2:#8FB8D5; --h3:#4D8FB9; --h4:#14507A;
+  --a1:#CFE3EE; --a2:#F2DE9E; --a3:#EDB77A; --a4:#DC7C55; --a5:#B93A2C; --a6:#7A1C14;
+  --hero:#0C1F38; --hero-ink:#F3F7FB; --hero-muted:#9DB2C9; --hero-line:rgba(255,255,255,.14);
+  --shadow:0 1px 2px rgba(14,30,51,.05),0 6px 20px -12px rgba(14,30,51,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1522; --surface:#12233A; --ink:#E8EFF7; --muted:#9BAEC4; --line:#26405C; --line2:#1B314B;
+    --brand:#6FB6E3; --brand2:#4A9ACB; --brand-soft:#16324D;
+    --crit:#FF8D80; --crit-soft:#3A1F1F; --warn:#F2B04C; --warn-soft:#3A2D14; --ok:#6FD6A0; --ok-soft:#173528;
+    --h0:#1A2F47; --h1:#1E4466; --h2:#2A6A93; --h3:#4A9ACB; --h4:#8BD0F5;
+    --a1:#27526A; --a2:#7A6A2C; --a3:#9A6A3C; --a4:#B8573A; --a5:#E0524A; --a6:#FF8D80;
+    --hero:#07101B; --hero-ink:#E8EFF7; --hero-muted:#7F95AD; --hero-line:rgba(255,255,255,.12);
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0A1522; --surface:#12233A; --ink:#E8EFF7; --muted:#9BAEC4; --line:#26405C; --line2:#1B314B;
+    --brand:#6FB6E3; --brand2:#4A9ACB; --brand-soft:#16324D;
+    --crit:#FF8D80; --crit-soft:#3A1F1F; --warn:#F2B04C; --warn-soft:#3A2D14; --ok:#6FD6A0; --ok-soft:#173528;
+    --h0:#1A2F47; --h1:#1E4466; --h2:#2A6A93; --h3:#4A9ACB; --h4:#8BD0F5;
+    --a1:#27526A; --a2:#7A6A2C; --a3:#9A6A3C; --a4:#B8573A; --a5:#E0524A; --a6:#FF8D80;
+    --hero:#07101B; --hero-ink:#E8EFF7; --hero-muted:#7F95AD; --hero-line:rgba(255,255,255,.12);
+    --shadow:none;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 60px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.num,.fig{font-variant-numeric:tabular-nums}
+.disp{font-family:"Sora","Figtree",system-ui,sans-serif}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* hero */
+.hero{background:var(--hero);color:var(--hero-ink);padding:40px 0 92px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:var(--hero-line)}
+.hero .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--hero-muted);font-size:14px}
+.hero .top b{color:var(--hero-ink);font-weight:600;font-family:"Sora",sans-serif;letter-spacing:.01em}
+.hero .big{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;margin:46px 0 30px}
+.hero .big .n{font-family:"Sora",sans-serif;font-weight:700;font-size:clamp(76px,14vw,150px);line-height:.88;letter-spacing:-.03em}
+.hero .big .t{max-width:30em;padding-bottom:6px}
+.hero .big .t h1{font-family:"Sora",sans-serif;font-size:clamp(20px,2.6vw,28px);line-height:1.3;font-weight:600;margin:0 0 8px}
+.hero .big .t p{margin:0;color:var(--hero-muted);font-size:16.5px}
+.bar{display:flex;height:34px;border-radius:6px;overflow:hidden;background:rgba(255,255,255,.1);gap:2px}
+.bar i{display:block;height:100%}
+.barlab{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:14px;color:var(--hero-muted)}
+.barlab b{color:var(--hero-ink);font-weight:600}
+.barlab .k{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:7px}
+
+/* kpi row */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:-58px;position:relative;z-index:2}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+.kpi .v{font-family:"Sora",sans-serif;font-size:clamp(22px,2.4vw,30px);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.kpi .l{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.35}
+.kpi.crit .v{color:var(--crit)}.kpi.ok .v{color:var(--ok)}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+/* nav */
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);margin-top:26px;border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.top a{padding:14px 14px;text-decoration:none;color:var(--muted);font-weight:600;font-size:14.5px;white-space:nowrap;border-bottom:3px solid transparent}
+nav.top a:hover{color:var(--ink)}
+nav.top a.on{color:var(--brand);border-bottom-color:var(--brand)}
+nav.top a:focus-visible{outline:3px solid var(--brand2);outline-offset:-3px}
+
+/* sections */
+section{padding:52px 0 6px}
+section>.wrap>h2{font-family:"Sora",sans-serif;font-size:28px;line-height:1.2;margin:0 0 8px;font-weight:600;letter-spacing:-.015em}
+section>.wrap>p.lead{color:var(--muted);margin:0 0 26px;max-width:46em;font-size:17px}
+h3{font-family:"Sora",sans-serif;font-size:16.5px;margin:0 0 4px;font-weight:600;letter-spacing:-.005em}
+.sub3{font-family:"Sora",sans-serif;font-size:19px;font-weight:600;margin:34px 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+.card p.cap{color:var(--muted);font-size:14px;margin:0 0 16px}
+.grid{display:grid;gap:16px}.grid>*{min-width:0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+@media(min-width:901px) and (max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}}
+.mt{margin-top:16px}
+.note{font-size:13.5px;color:var(--muted);border-inline-start:3px solid var(--line);padding:2px 12px;margin:16px 0 0}
+
+/* findings */
+.find{display:grid;grid-template-columns:6px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line2)}
+.find:first-child{padding-top:4px}.find:last-child{border-bottom:0;padding-bottom:4px}
+.find .rule{border-radius:3px;background:var(--c)}
+.find.crit{--c:var(--crit)}.find.warn{--c:var(--gold)}.find.ok{--c:var(--ok)}
+.find h4{margin:0 0 3px;font-size:17px;font-weight:700}
+.find p{margin:0;color:var(--muted);font-size:15.5px}
+.find b{color:var(--ink);font-weight:700}
+.find .tag{display:inline-block;margin-inline-start:10px;font-size:12.5px;font-weight:700;border-radius:999px;padding:1px 10px;vertical-align:2px}
+.find.crit .tag{background:var(--crit-soft);color:var(--crit)}.find.warn .tag{background:var(--warn-soft);color:var(--warn)}.find.ok .tag{background:var(--ok-soft);color:var(--ok)}
+
+/* bars & charts */
+.hb{display:grid;grid-template-columns:minmax(90px,150px) 1fr auto;gap:12px;align-items:center;margin:10px 0;font-size:14.5px}
+.hb .t{height:12px;background:var(--line2);border-radius:6px;overflow:hidden}
+.hb .t i{display:block;height:100%;border-radius:6px}
+.hb .nm{line-height:1.3}
+.hb .vl{color:var(--muted);min-width:44px;text-align:end}
+.stack{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--line2)}
+.stack i{display:block;height:100%}
+.stackrow{display:grid;grid-template-columns:minmax(120px,160px) 1fr 84px;gap:14px;align-items:center;margin:12px 0;font-size:14.5px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin:8px 0 4px}
+.legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;background:var(--c);margin-inline-end:6px;vertical-align:-1px}
+.cols{display:flex;align-items:flex-end;gap:10px;height:176px;padding-top:8px}
+.cols>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0}
+.cols .b{width:100%;max-width:62px;border-radius:6px 6px 0 0;min-height:2px}
+.cols .v{font-size:13px;font-weight:700;margin-bottom:4px}
+.cols .x{font-size:12.5px;color:var(--muted);margin-top:7px;text-align:center;line-height:1.3}
+
+/* tables */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:start;font-weight:600;color:var(--muted);font-size:12.5px;padding:10px 8px;border-bottom:2px solid var(--line);white-space:nowrap;vertical-align:bottom}
+td{padding:12px 8px;border-bottom:1px solid var(--line2);white-space:nowrap;vertical-align:top}
+td.wrapc{white-space:normal;min-width:260px}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:end}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:13px;font-weight:700}
+.pill.g{background:var(--ok-soft);color:var(--ok)}.pill.a{background:var(--warn-soft);color:var(--warn)}.pill.r{background:var(--crit-soft);color:var(--crit)}
+
+/* heat */
+.hrow b{white-space:nowrap}.hrow{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;margin:7px 0}
+.hcells{display:grid;gap:2px}
+.hc{aspect-ratio:1/1.7;border-radius:2px;background:var(--h0)}
+.hc.fri{outline:1px dashed var(--line);outline-offset:-1px;background:transparent}
+.hmonths{display:grid;grid-template-columns:150px 1fr;gap:12px;font-size:12.5px;color:var(--muted)}
+
+.rep{border-inline-start:4px solid var(--brand2);padding:2px 14px}
+.rep h4{margin:0;font-size:16px}.rep p{margin:3px 0 0;color:var(--muted);font-size:14.5px}
+
+.rec{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line2)}
+.rec:first-child{padding-top:2px}.rec:last-child{border-bottom:0}
+.rec .k{width:30px;height:30px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+.rec h4{margin:0 0 2px;font-size:16px}.rec p{margin:0;color:var(--muted);font-size:14.5px}
+.end{height:56px}
+svg text{font-family:inherit}
+@media print{nav.top{display:none}.hero,.bar i,.stack i,.hb .t i,.cols .b{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid-page}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top"><b>Sales &amp; Lead Follow-up Review</b><span id="meta"></span></div>
+    <div class="big">
+      <div class="n" id="bigN"></div>
+      <div class="t"><h1 id="bigH"></h1><p id="bigP"></p></div>
+    </div>
+    <div class="bar" id="heroBar"></div>
+    <div class="barlab" id="heroLab"></div>
+  </div>
+</header>
+
+<div class="wrap"><div class="kpis" id="kpis"></div></div>
+
+<nav class="top" aria-label="Report sections"><div class="wrap" id="nav"></div></nav>
+
+<main>
+<section id="s1"><div class="wrap">
+  <h2>Executive summary</h2>
+  <p class="lead">What the General Manager and the CFO need to know, ordered by severity.</p>
+  <div class="card" id="findings"></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>Weekly lead and deal flow</h3><p class="cap">Bars: new leads &nbsp;·&nbsp; line: new deals</p><div id="weekly"></div></div>
+    <div class="card"><h3>From lead to delivery</h3><p class="cap">Approximate. Converted leads leave the Leads module.</p><div id="funnel"></div></div>
+  </div>
+</div></section>
+
+<section id="s2"><div class="wrap">
+  <h2>Team</h2>
+  <p class="lead">Judged only on what is recorded in Zoho CRM. Follow-up is the share of a rep's assigned leads with a contact on record; Deals W/L is deals won and lost; Sales is won deal value in IQD.</p>
+  <div class="card"><div class="tw" id="score"></div>
+    <p class="note">Follow-up means the lead's status moved off "Not Contacted" or a task for the lead was completed. Working days exclude Fridays. Noor Fakhri's first activity is on Aug 15, so her days are counted from that date.</p></div>
+  <div class="card mt"><h3>Daily activity</h3><p class="cap">One square per day. Darker means more records created or edited, including notes. Dashed squares are Fridays.</p><div class="tw"><div id="heat" style="min-width:720px"></div></div></div>
+  <div class="grid g2 mt" id="reps"></div>
+  <div class="card mt"><h3>Central CRM and Marketing accounts</h3><p class="cap">Accounts that hold leads, with their activity over the period</p><div class="tw" id="accounts"></div></div>
+</div></section>
+
+<section id="s3"><div class="wrap">
+  <h2>Timing and responsiveness</h2>
+  <p class="lead">How long a lead waits before anyone acts, how long the move from the CRM team to sales takes, and how long deals take to close.</p>
+  <div class="card"><h3>Age of leads still marked "Not Contacted"</h3><p class="cap">Days since creation, as of Oct 2, 2026 (<span id="uncN"></span> leads). The right-hand figure is each rep's average age.</p><div id="aging"></div></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>How fast follow-up tasks get completed</h3><p class="cap">Time between a task being created and closed, completed tasks only</p><div class="tw" id="taskspeed"></div></div>
+    <div class="card"><h3>Overdue tasks by days late</h3><p class="cap" id="odcap"></p><div id="overdue"></div></div>
+  </div>
+  <div class="sub3">Hand-off from the CRM team to sales</div>
+  <div class="grid g3">
+    <div class="card"><h3>Website leads after CRM review</h3><p class="cap">Time until assigned to a sales rep (estimate)</p><div id="ho1"></div></div>
+    <div class="card"><h3>Waiting for CR review</h3><p class="cap">Website and event leads, by age</p><div id="ho2"></div></div>
+    <div class="card"><h3>Held by CRM and Marketing accounts</h3><p class="cap">Not yet assigned to a sales rep</p><div id="ho3"></div></div>
+  </div>
+  <p class="note">The export has no owner-change history and no logged calls, so a true time-to-first-contact cannot be measured. These figures are estimates from creation date, last modification and review status. Logging calls would make the measurement exact.</p>
+  <div class="sub3">From lead to deal, then to close</div>
+  <div class="grid g2">
+    <div class="card"><h3>Lead-to-deal conversion time</h3><p class="cap" id="convcap"></p><div id="conv"></div></div>
+    <div class="card"><h3>Sales cycle length</h3><p class="cap" id="cyclecap"></p><div id="cycle"></div></div>
+  </div>
+</div></section>
+
+<section id="s4"><div class="wrap">
+  <h2>Sales and collections</h2>
+  <p class="lead">For the CFO: revenue, deals in progress, collections and in-house financing. Amounts are in IQD as stored in the system.</p>
+  <div class="grid g4" id="fkpi"></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>Revenue by closing month</h3><p class="cap">Won and delivered deals, IQD millions</p><div id="rev"></div></div>
+    <div class="card"><h3>Deals by stage</h3><p class="cap">Count in brackets, value on the right</p><div id="stages"></div></div>
+  </div>
+  <div class="card mt"><h3>Reconciling uncollected amounts</h3><p class="cap" id="reccap"></p><div id="recon"></div>
+    <div class="tw mt" id="recdet"></div>
+    <p class="note">The logical ceiling is arithmetic: anything above the deal value, or belonging to a lost deal, cannot be owed. Accounting should confirm before it is adopted.</p></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>In-house installment financing</h3><p class="cap" id="fincap"></p><div id="fin"></div></div>
+    <div class="card"><h3>Financial performance by rep</h3><p class="cap">Won and delivered deal value, IQD</p><div class="tw" id="repfin"></div></div>
+  </div>
+</div></section>
+
+<section id="s5"><div class="wrap">
+  <h2>Marketing and lead sources</h2>
+  <p class="lead">Where leads come from, which channels get followed up, and why leads and deals are lost.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Leads by entry channel</h3><p class="cap">With the share that shows follow-up evidence</p><div id="layout"></div></div>
+    <div class="card"><h3>Lead source versus deal source</h3><p class="cap">Current leads by source, and deals by source</p><div id="srccmp"></div></div>
+  </div>
+  <div class="grid g3 mt">
+    <div class="card"><h3>Why leads are lost</h3><p class="cap" id="lostcap"></p><div id="lostL"></div></div>
+    <div class="card"><h3>Why deals are lost</h3><p class="cap" id="lostdcap"></p><div id="lostD"></div></div>
+    <div class="card"><h3>Test drives</h3><p class="cap" id="tdcap"></p><div id="td"></div></div>
+  </div>
+</div></section>
+
+<section id="s6"><div class="wrap">
+  <h2>Data quality and recommendations</h2>
+  <p class="lead">Every number here depends on clean data. These gaps limit its precision and explain part of what looks missing.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Quality checks</h3><div id="dq"></div></div>
+    <div class="card"><h3>Recommended actions</h3><div id="recs"></div></div>
+  </div>
+</div></section>
+</main>
+<div class="end"></div>
+
+<script>
+const D = {"asof":"2026-10-02","range":["2026-07-01","2026-10-02"],"kpi":{"leads":2572,"deals":76,"won":51,"lost":15,"open":10,"won_val":1188569827.0,"lost_val":190593900.0,"open_val":360277525.0,"conv_pct":2.87,"win_rate":77.3,"avg_deal":23305290.725490198,"pay_amount":1640193260.0,"pay_collected":1251838875.0,"pay_remaining":388354385.0,"pay_not_collected_n":19,"pay_n":108,"cash_return":30301885.0,"invoices":1},"weekly":[{"w":"2026-06-29","leads":101,"deals":5},{"w":"2026-07-06","leads":225,"deals":6},{"w":"2026-07-13","leads":211,"deals":11},{"w":"2026-07-20","leads":135,"deals":8},{"w":"2026-07-27","leads":159,"deals":2},{"w":"2026-08-03","leads":115,"deals":2},{"w":"2026-08-10","leads":502,"deals":2},{"w":"2026-08-17","leads":155,"deals":1},{"w":"2026-08-24","leads":97,"deals":4},{"w":"2026-08-31","leads":153,"deals":5},{"w":"2026-09-07","leads":94,"deals":2},{"w":"2026-09-14","leads":177,"deals":9},{"w":"2026-09-21","leads":214,"deals":14},{"w":"2026-09-28","leads":234,"deals":5}],"monthly":[{"m":"2026-07","leads":794,"deals":32,"won_val":414550000.0},{"m":"2026-08","leads":916,"deals":9,"won_val":124625000.0},{"m":"2026-09","leads":788,"deals":35,"won_val":649394827.0},{"m":"2026-10","leads":74,"deals":0,"won_val":0.0}],"lead_status":{"Not Contacted":2340,"Lost Lead":141,"Contact in Future":89,"Qualified":2},"lead_layout":{"Phone Inquiries":1025,"Walk-in Leads":888,"Events Participators":357,"Website Forms":302},"lost_reason_leads":{"No Answer":46,"Unsuitable Finance Options":32,"Vehicles out of Budget":26,"Wrong contact details":10,"Loss of interest":10,"Inactivity":8,"Unavailable Model":3,"No License":2,"Lost to Competition":2,"Misdirect":2},"lost_reason_deals":{"Out of Budget":6,"Loss of interest":4,"Sales Channel Changed":3,"Unsuitable Finance Options":2},"dups":257,"no_source":357,"sources":[{"s":"Social Media","n":996},{"s":"Word Of Mouth","n":729},{"s":"Events","n":368},{"s":"Unspecified","n":261},{"s":"Billboards","n":110},{"s":"Website","n":42},{"s":"WhatsApp API","n":38},{"s":"Influencer","n":21},{"s":"SMS","n":3},{"s":"Source","n":2},{"s":"Returning Customer","n":1},{"s":"Google","n":1}],"medium":{"Unspecified":1097,"Word of Mouth":919,"Facebook":294,"Instagram":259,"SMS":2,"YouTube":1},"platform":{"Instagram":519,"Facebook":479,"TikTok":4},"utm":{"Summer Campaign":142,"META":93,"twinstar_prelaunch":38,"Meta":5,"Campaign":2,"IQ Cars Banners":1},"deal_source":{"Social Media":32,"Direct Traffic":22,"walk-in":7,"Campaign":5,"Influencer":3,"Billboards":3,"Website":3,"Returning Customer":1},"event_names":{"Media Test Drive":357},"layout_perf":[{"k":"Events Participators","n":357,"lost":0,"future":0,"unc":357},{"k":"Phone Inquiries","n":1025,"lost":77,"future":29,"unc":919},{"k":"Walk-in Leads","n":888,"lost":7,"future":58,"unc":821},{"k":"Website Forms","n":302,"lost":57,"future":2,"unc":243}],"unc_age":{"all":{"0-1":50,"2-3":69,"4-7":88,"8-14":213,"15-30":265,"+30":1655},"mean":46.89700854700855,"median":47.0},"unc_by_owner":[{"o":"Abdullah Maytham","n":840,"buckets":{"0-1":8,"2-3":4,"4-7":18,"8-14":84,"15-30":72,"+30":654},"avg":50.05714285714286,"over14":726},{"o":"Muhammad Saleh","n":413,"buckets":{"0-1":3,"2-3":4,"4-7":2,"8-14":16,"15-30":40,"+30":348},"avg":53.464891041162225,"over14":388},{"o":"Amna Mustafa","n":365,"buckets":{"0-1":8,"2-3":10,"4-7":8,"8-14":8,"15-30":27,"+30":304},"avg":56.71780821917808,"over14":331},{"o":"Rania AttahAllah","n":355,"buckets":{"0-1":12,"2-3":3,"4-7":31,"8-14":32,"15-30":23,"+30":254},"avg":48.87323943661972,"over14":277},{"o":"Noor Fakhri","n":230,"buckets":{"0-1":6,"2-3":4,"4-7":19,"8-14":52,"15-30":80,"+30":69},"avg":22.756521739130434,"over14":149}],"handoff":{"n":136,"by_owner":{"crm2":46,"Marketing":45,"crm1":43,"crm4":1,"crm3":1},"age_b":{"0-1":13,"2-3":44,"4-7":10,"8-14":21,"15-30":23,"+30":25},"avg_age":16.705882352941178,"median_age":8.0,"over7":69},"cr":{"pending":494,"completed":165,"pending_age":{"0-1":13,"2-3":44,"4-7":10,"8-14":21,"15-30":24,"+30":382},"pending_avg_age":38.59514170040486,"by_layout":{"Website Forms":{"pending":137,"completed":165},"Events Participators":{"pending":357,"completed":0}}},"tasks":{"total":2620,"completed":199,"open":2420,"overdue":1951,"status":{"Not Started":1920,"Deferred":475,"Completed":199,"In Progress":25,"Closed Lost due to canceling":1},"avg_overdue_days":46.51050743208611,"median_overdue_days":46.0,"od_b":{"1-3":74,"4-7":86,"8-14":231,"15-30":282,"+30":1278},"future_due_beyond_2026":260},"tasks_by_owner":[{"o":"Abdullah Maytham","total":852,"completed":95,"open":757,"overdue":736,"deferred":0,"inprog":15,"comp_pct":11.2,"avg_od":48.744565217391305,"med_close":2.1694444444444443,"same_day":29,"within3":60,"over7":10,"oldest_od":88},{"o":"Muhammad Saleh","total":361,"completed":23,"open":338,"overdue":326,"deferred":0,"inprog":0,"comp_pct":6.4,"avg_od":52.736196319018404,"med_close":0.001388888888888889,"same_day":17,"within3":17,"over7":4,"oldest_od":90},{"o":"Amna Mustafa","total":324,"completed":51,"open":273,"overdue":262,"deferred":0,"inprog":2,"comp_pct":15.7,"avg_od":60.11832061068702,"med_close":26.55625,"same_day":15,"within3":19,"over7":31,"oldest_od":90},{"o":"Rania AttahAllah","total":369,"completed":29,"open":340,"overdue":324,"deferred":108,"inprog":8,"comp_pct":7.9,"avg_od":49.68827160493827,"med_close":28.61111111111111,"same_day":4,"within3":4,"over7":23,"oldest_od":90},{"o":"Noor Fakhri","total":240,"completed":0,"open":239,"overdue":230,"deferred":0,"inprog":0,"comp_pct":0.0,"avg_od":21.708695652173912,"med_close":null,"same_day":0,"within3":0,"over7":0,"oldest_od":47},{"o":"crm1","total":51,"completed":0,"open":51,"overdue":27,"deferred":0,"inprog":0,"comp_pct":0.0,"avg_od":11.333333333333334,"med_close":null,"same_day":0,"within3":0,"over7":0,"oldest_od":21},{"o":"crm2","total":415,"completed":0,"open":415,"overdue":42,"deferred":367,"inprog":0,"comp_pct":0.0,"avg_od":9.880952380952381,"med_close":null,"same_day":0,"within3":0,"over7":0,"oldest_od":21}],"notes_by":{"Rania AttahAllah":156,"Amna Mustafa":42,"Abdullah Maytham":39,"Noor Fakhri":33,"Muhammad Saleh":29,"crm2":5,"crm1":1},"notes_total":305,"activity":[{"o":"Abdullah Maytham","events":1847,"active_days":77,"last":"2026-10-02 21:33:00","days_since":0,"weeks":{"2026-06-29":67,"2026-07-06":218,"2026-07-13":187,"2026-07-20":153,"2026-07-27":206,"2026-08-03":124,"2026-08-10":142,"2026-08-17":131,"2026-08-24":62,"2026-08-31":48,"2026-09-07":42,"2026-09-14":139,"2026-09-21":186,"2026-09-28":142},"by_mod":{"leads":897,"tasks":872,"notes":39,"testdrive":26,"orders":11,"deals":2},"last14":388,"last14_days":11},{"o":"Muhammad Saleh","events":720,"active_days":75,"last":"2026-10-01 20:46:00","days_since":1,"weeks":{"2026-06-29":65,"2026-07-06":59,"2026-07-13":94,"2026-07-20":51,"2026-07-27":53,"2026-08-03":44,"2026-08-10":48,"2026-08-17":40,"2026-08-24":26,"2026-08-31":27,"2026-09-07":48,"2026-09-14":59,"2026-09-21":44,"2026-09-28":62},"by_mod":{"leads":342,"tasks":322,"notes":28,"orders":15,"testdrive":10,"deals":3},"last14":131,"last14_days":11},{"o":"Amna Mustafa","events":665,"active_days":66,"last":"2026-10-01 17:36:00","days_since":1,"weeks":{"2026-06-29":50,"2026-07-06":158,"2026-07-13":113,"2026-07-20":40,"2026-07-27":20,"2026-08-03":6,"2026-08-10":20,"2026-08-17":22,"2026-08-24":19,"2026-08-31":36,"2026-09-07":34,"2026-09-14":19,"2026-09-21":35,"2026-09-28":93},"by_mod":{"leads":302,"tasks":295,"notes":40,"testdrive":13,"orders":12,"deals":3},"last14":128,"last14_days":8},{"o":"Rania AttahAllah","events":965,"active_days":69,"last":"2026-10-01 17:52:00","days_since":1,"weeks":{"2026-06-29":65,"2026-07-06":140,"2026-07-13":118,"2026-07-20":100,"2026-07-27":96,"2026-08-03":39,"2026-08-10":42,"2026-08-17":57,"2026-08-24":53,"2026-08-31":38,"2026-09-07":32,"2026-09-14":27,"2026-09-21":91,"2026-09-28":67},"by_mod":{"tasks":460,"leads":326,"notes":147,"orders":14,"testdrive":14,"deals":4},"last14":181,"last14_days":12},{"o":"Noor Fakhri","events":467,"active_days":42,"last":"2026-10-02 20:33:00","days_since":0,"weeks":{"2026-08-10":23,"2026-08-17":54,"2026-08-24":44,"2026-08-31":57,"2026-09-07":54,"2026-09-14":113,"2026-09-21":78,"2026-09-28":44},"by_mod":{"leads":217,"tasks":204,"notes":33,"orders":8,"testdrive":4,"deals":1},"last14":155,"last14_days":12}],"weeks_axis":["2026-06-29","2026-07-06","2026-07-13","2026-07-20","2026-07-27","2026-08-03","2026-08-10","2026-08-17","2026-08-24","2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28"],"calendar":{"Abdullah Maytham":{"2026-07-01":1,"2026-07-02":20,"2026-07-03":2,"2026-07-04":15,"2026-07-05":29,"2026-07-06":14,"2026-07-07":14,"2026-07-08":42,"2026-07-09":61,"2026-07-10":0,"2026-07-11":47,"2026-07-12":40,"2026-07-13":72,"2026-07-14":33,"2026-07-15":24,"2026-07-16":54,"2026-07-17":0,"2026-07-18":0,"2026-07-19":4,"2026-07-20":31,"2026-07-21":33,"2026-07-22":10,"2026-07-23":2,"2026-07-24":7,"2026-07-25":35,"2026-07-26":35,"2026-07-27":60,"2026-07-28":31,"2026-07-29":70,"2026-07-30":0,"2026-07-31":0,"2026-08-01":39,"2026-08-02":6,"2026-08-03":24,"2026-08-04":0,"2026-08-05":26,"2026-08-06":8,"2026-08-07":17,"2026-08-08":38,"2026-08-09":11,"2026-08-10":16,"2026-08-11":25,"2026-08-12":26,"2026-08-13":25,"2026-08-14":0,"2026-08-15":0,"2026-08-16":50,"2026-08-17":28,"2026-08-18":47,"2026-08-19":23,"2026-08-20":0,"2026-08-21":1,"2026-08-22":2,"2026-08-23":30,"2026-08-24":11,"2026-08-25":13,"2026-08-26":0,"2026-08-27":25,"2026-08-28":0,"2026-08-29":9,"2026-08-30":4,"2026-08-31":6,"2026-09-01":2,"2026-09-02":15,"2026-09-03":5,"2026-09-04":0,"2026-09-05":10,"2026-09-06":10,"2026-09-07":3,"2026-09-08":6,"2026-09-09":8,"2026-09-10":6,"2026-09-11":0,"2026-09-12":12,"2026-09-13":7,"2026-09-14":0,"2026-09-15":38,"2026-09-16":22,"2026-09-17":8,"2026-09-18":11,"2026-09-19":51,"2026-09-20":9,"2026-09-21":85,"2026-09-22":25,"2026-09-23":26,"2026-09-24":0,"2026-09-25":0,"2026-09-26":38,"2026-09-27":12,"2026-09-28":49,"2026-09-29":0,"2026-09-30":52,"2026-10-01":13,"2026-10-02":28},"Muhammad Saleh":{"2026-07-01":7,"2026-07-02":15,"2026-07-03":10,"2026-07-04":27,"2026-07-05":6,"2026-07-06":8,"2026-07-07":16,"2026-07-08":0,"2026-07-09":25,"2026-07-10":5,"2026-07-11":5,"2026-07-12":0,"2026-07-13":48,"2026-07-14":1,"2026-07-15":6,"2026-07-16":4,"2026-07-17":7,"2026-07-18":17,"2026-07-19":11,"2026-07-20":0,"2026-07-21":14,"2026-07-22":2,"2026-07-23":10,"2026-07-24":0,"2026-07-25":18,"2026-07-26":7,"2026-07-27":17,"2026-07-28":6,"2026-07-29":14,"2026-07-30":4,"2026-07-31":4,"2026-08-01":8,"2026-08-02":0,"2026-08-03":15,"2026-08-04":0,"2026-08-05":10,"2026-08-06":7,"2026-08-07":0,"2026-08-08":2,"2026-08-09":10,"2026-08-10":4,"2026-08-11":6,"2026-08-12":16,"2026-08-13":10,"2026-08-14":8,"2026-08-15":0,"2026-08-16":4,"2026-08-17":2,"2026-08-18":3,"2026-08-19":0,"2026-08-20":6,"2026-08-21":0,"2026-08-22":19,"2026-08-23":10,"2026-08-24":0,"2026-08-25":0,"2026-08-26":2,"2026-08-27":9,"2026-08-28":7,"2026-08-29":8,"2026-08-30":0,"2026-08-31":4,"2026-09-01":4,"2026-09-02":7,"2026-09-03":1,"2026-09-04":8,"2026-09-05":2,"2026-09-06":1,"2026-09-07":9,"2026-09-08":0,"2026-09-09":4,"2026-09-10":14,"2026-09-11":5,"2026-09-12":11,"2026-09-13":5,"2026-09-14":0,"2026-09-15":22,"2026-09-16":6,"2026-09-17":6,"2026-09-18":0,"2026-09-19":9,"2026-09-20":16,"2026-09-21":6,"2026-09-22":5,"2026-09-23":5,"2026-09-24":1,"2026-09-25":2,"2026-09-26":25,"2026-09-27":0,"2026-09-28":1,"2026-09-29":0,"2026-09-30":38,"2026-10-01":23,"2026-10-02":0},"Amna Mustafa":{"2026-07-01":7,"2026-07-02":22,"2026-07-03":0,"2026-07-04":9,"2026-07-05":12,"2026-07-06":16,"2026-07-07":13,"2026-07-08":21,"2026-07-09":23,"2026-07-10":22,"2026-07-11":30,"2026-07-12":33,"2026-07-13":0,"2026-07-14":19,"2026-07-15":58,"2026-07-16":16,"2026-07-17":0,"2026-07-18":12,"2026-07-19":8,"2026-07-20":13,"2026-07-21":6,"2026-07-22":4,"2026-07-23":2,"2026-07-24":0,"2026-07-25":10,"2026-07-26":5,"2026-07-27":2,"2026-07-28":2,"2026-07-29":2,"2026-07-30":10,"2026-07-31":0,"2026-08-01":2,"2026-08-02":2,"2026-08-03":2,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":4,"2026-08-09":0,"2026-08-10":0,"2026-08-11":4,"2026-08-12":7,"2026-08-13":2,"2026-08-14":0,"2026-08-15":7,"2026-08-16":0,"2026-08-17":2,"2026-08-18":0,"2026-08-19":2,"2026-08-20":0,"2026-08-21":0,"2026-08-22":16,"2026-08-23":2,"2026-08-24":2,"2026-08-25":2,"2026-08-26":2,"2026-08-27":4,"2026-08-28":0,"2026-08-29":0,"2026-08-30":9,"2026-08-31":0,"2026-09-01":4,"2026-09-02":8,"2026-09-03":5,"2026-09-04":6,"2026-09-05":9,"2026-09-06":4,"2026-09-07":14,"2026-09-08":7,"2026-09-09":9,"2026-09-10":0,"2026-09-11":0,"2026-09-12":2,"2026-09-13":2,"2026-09-14":4,"2026-09-15":5,"2026-09-16":8,"2026-09-17":2,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":9,"2026-09-24":11,"2026-09-25":0,"2026-09-26":11,"2026-09-27":4,"2026-09-28":4,"2026-09-29":9,"2026-09-30":50,"2026-10-01":30,"2026-10-02":0},"Rania AttahAllah":{"2026-07-01":18,"2026-07-02":14,"2026-07-03":0,"2026-07-04":12,"2026-07-05":21,"2026-07-06":21,"2026-07-07":16,"2026-07-08":19,"2026-07-09":36,"2026-07-10":0,"2026-07-11":25,"2026-07-12":23,"2026-07-13":28,"2026-07-14":24,"2026-07-15":13,"2026-07-16":4,"2026-07-17":7,"2026-07-18":29,"2026-07-19":13,"2026-07-20":29,"2026-07-21":0,"2026-07-22":16,"2026-07-23":8,"2026-07-24":0,"2026-07-25":38,"2026-07-26":9,"2026-07-27":19,"2026-07-28":12,"2026-07-29":10,"2026-07-30":12,"2026-07-31":7,"2026-08-01":13,"2026-08-02":23,"2026-08-03":0,"2026-08-04":0,"2026-08-05":16,"2026-08-06":10,"2026-08-07":0,"2026-08-08":13,"2026-08-09":0,"2026-08-10":10,"2026-08-11":3,"2026-08-12":9,"2026-08-13":9,"2026-08-14":0,"2026-08-15":9,"2026-08-16":2,"2026-08-17":15,"2026-08-18":0,"2026-08-19":10,"2026-08-20":24,"2026-08-21":0,"2026-08-22":6,"2026-08-23":2,"2026-08-24":0,"2026-08-25":20,"2026-08-26":19,"2026-08-27":0,"2026-08-28":0,"2026-08-29":9,"2026-08-30":5,"2026-08-31":2,"2026-09-01":7,"2026-09-02":14,"2026-09-03":0,"2026-09-04":0,"2026-09-05":5,"2026-09-06":10,"2026-09-07":18,"2026-09-08":8,"2026-09-09":0,"2026-09-10":4,"2026-09-11":2,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":4,"2026-09-18":0,"2026-09-19":16,"2026-09-20":7,"2026-09-21":10,"2026-09-22":26,"2026-09-23":5,"2026-09-24":10,"2026-09-25":10,"2026-09-26":22,"2026-09-27":8,"2026-09-28":28,"2026-09-29":0,"2026-09-30":16,"2026-10-01":23,"2026-10-02":0},"Noor Fakhri":{"2026-07-01":0,"2026-07-02":0,"2026-07-03":0,"2026-07-04":0,"2026-07-05":0,"2026-07-06":0,"2026-07-07":0,"2026-07-08":0,"2026-07-09":0,"2026-07-10":0,"2026-07-11":0,"2026-07-12":0,"2026-07-13":0,"2026-07-14":0,"2026-07-15":0,"2026-07-16":0,"2026-07-17":0,"2026-07-18":0,"2026-07-19":0,"2026-07-20":0,"2026-07-21":0,"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":7,"2026-08-16":16,"2026-08-17":10,"2026-08-18":6,"2026-08-19":7,"2026-08-20":18,"2026-08-21":6,"2026-08-22":7,"2026-08-23":0,"2026-08-24":2,"2026-08-25":3,"2026-08-26":6,"2026-08-27":16,"2026-08-28":0,"2026-08-29":9,"2026-08-30":8,"2026-08-31":4,"2026-09-01":7,"2026-09-02":14,"2026-09-03":10,"2026-09-04":0,"2026-09-05":22,"2026-09-06":0,"2026-09-07":12,"2026-09-08":13,"2026-09-09":6,"2026-09-10":3,"2026-09-11":0,"2026-09-12":10,"2026-09-13":10,"2026-09-14":7,"2026-09-15":15,"2026-09-16":34,"2026-09-17":6,"2026-09-18":18,"2026-09-19":18,"2026-09-20":15,"2026-09-21":20,"2026-09-22":21,"2026-09-23":14,"2026-09-24":6,"2026-09-25":0,"2026-09-26":9,"2026-09-27":8,"2026-09-28":24,"2026-09-29":4,"2026-09-30":4,"2026-10-01":0,"2026-10-02":12}},"leads_by_owner":[{"o":"Abdullah Maytham","n":957,"lost":46,"future":71,"unc":840,"qual":0,"created":807,"with_note":761,"phone":581,"walkin":228,"web":32,"event":116},{"o":"Muhammad Saleh","n":450,"lost":21,"future":16,"unc":413,"qual":0,"created":305,"with_note":270,"phone":127,"walkin":180,"web":35,"event":108},{"o":"Amna Mustafa","n":413,"lost":45,"future":2,"unc":365,"qual":1,"created":276,"with_note":118,"phone":140,"walkin":139,"web":33,"event":101},{"o":"Rania AttahAllah","n":383,"lost":28,"future":0,"unc":355,"qual":0,"created":310,"with_note":148,"phone":75,"walkin":243,"web":33,"event":32},{"o":"Noor Fakhri","n":230,"lost":0,"future":0,"unc":230,"qual":0,"created":197,"with_note":195,"phone":102,"walkin":95,"web":33,"event":0}],"conv_dist":[{"l":"Same day","n":28},{"l":"1-3 days","n":12},{"l":"4-7 days","n":8},{"l":"8-14 days","n":5},{"l":"15+ days","n":8}],"conv_stats":{"n":61,"median":1.0,"mean":4.704918032786885,"max":31.0},"cycle_stats":{"median":5.0,"mean":10.973684210526315,"p75":12.25,"max":309.0,"overall_median":8.0,"overall_mean":14.75,"over30":2},"cycle_dist":[{"l":"Same day","n":17},{"l":"1-3","n":14},{"l":"4-7","n":18},{"l":"8-14","n":25},{"l":"15-30","n":0},{"l":"30+","n":2}],"deals_by_owner":[{"o":"Abdullah Maytham","n":13,"won":7,"lost":3,"open":3,"won_val":155901313.0,"lost_val":43675000.0,"open_val":46050000.0,"avg":22271616.14285714,"conv_med":1.0,"cycle_med":5.0,"win_rate":70.0},{"o":"Muhammad Saleh","n":16,"won":13,"lost":2,"open":1,"won_val":317866330.0,"lost_val":20450000.0,"open_val":25377525.0,"avg":24451256.153846152,"conv_med":1.0,"cycle_med":4.5,"win_rate":87.0},{"o":"Amna Mustafa","n":12,"won":10,"lost":1,"open":1,"won_val":223546299.0,"lost_val":17900000.0,"open_val":22975000.0,"avg":22354629.9,"conv_med":2.0,"cycle_med":7.0,"win_rate":91.0},{"o":"Rania AttahAllah","n":19,"won":12,"lost":7,"open":0,"won_val":278549000.0,"lost_val":59500000.0,"open_val":0.0,"avg":23212416.666666668,"conv_med":0.0,"cycle_med":5.0,"win_rate":63.0},{"o":"Noor Fakhri","n":8,"won":6,"lost":1,"open":1,"won_val":143856885.0,"lost_val":30418900.0,"open_val":22975000.0,"avg":23976147.5,"conv_med":2.0,"cycle_med":4.0,"win_rate":86.0},{"o":"Ali Saadi","n":3,"won":2,"lost":0,"open":1,"won_val":50200000.0,"lost_val":0.0,"open_val":15525000.0,"avg":25100000.0,"conv_med":null,"cycle_med":0.0,"win_rate":100.0},{"o":"Marwan Talal","n":3,"won":1,"lost":1,"open":1,"won_val":18650000.0,"lost_val":18650000.0,"open_val":18650000.0,"avg":18650000.0,"conv_med":null,"cycle_med":0.0,"win_rate":50.0},{"o":"Musa Majid Saadi","n":2,"won":0,"lost":0,"open":2,"won_val":0.0,"lost_val":0.0,"open_val":208725000.0,"avg":0,"conv_med":null,"cycle_med":157.5,"win_rate":null}],"stage":[{"s":"Adding payments","n":6,"v":299752525.0},{"s":"Closed lost","n":15,"v":190593900.0},{"s":"Closed won","n":1,"v":18200000.0},{"s":"Delivery","n":50,"v":1170369827.0},{"s":"New deal","n":1,"v":0.0},{"s":"Payment & reservation","n":3,"v":60525000.0}],"model":[{"m":"Coolray","n":19,"won":13,"v":352001236.0},{"m":"Emgrand","n":57,"won":38,"v":836568591.0}],"sales_type":[{"t":"Corporate","n":7,"v":50650000.0},{"t":"Individual","n":68,"v":1119719827.0},{"t":"Traders","n":1,"v":18200000.0}],"delivery":{"with_date":50,"done":49,"scheduled":1,"scheduled_val":37070063.0,"done_val":1133299764.0,"next30":1},"create_to_delivery_med":0.0,"closing_month":[{"m":"2026-07","n":28,"v":389100000.0},{"m":"2026-08","n":11,"v":105125000.0},{"m":"2026-09","n":31,"v":630263064.0},{"m":"2026-10","n":5,"v":64081763.0},{"m":"2027-06","n":1,"v":0.0}],"fin":{"n":15,"amount":183693323.0,"interest":65614039.0,"vehicle":343102213.0,"cash":159408890.0,"monthly":10236590.372200001,"avg_inst":27.333333333333332,"avg_cash_pct":45.507799999999996,"avg_rate":0.13557333333333332,"approved":14,"waiting":1,"first_by_month":{"2026-08":1,"2026-09":1,"2026-10":9,"2026-11":4},"share_of_deals_pct":29.4},"pay_kind":[{"k":"Bank Pledge","n":2,"amount":45800000.0,"collected":0.0,"remaining":45800000.0},{"k":"Cash","n":100,"amount":1564091375.0,"collected":1251838875.0,"remaining":312252500.0},{"k":"Cash Return","n":6,"amount":30301885.0,"collected":0.0,"remaining":30301885.0}],"pay_by_owner":{"Muhammad Saleh":269231750.0,"Rania AttahAllah":262850000.0,"Amna Mustafa":187131875.0,"Musa Majid Saadi":171837500.0,"Abdullah Maytham":135842500.0,"Noor Fakhri":129307250.0,"Ali Saadi":95638000.0,"Marwan Talal":0.0},"td":{"n":65,"by_owner":{"Abdullah Maytham":25,"Amna Mustafa":13,"Rania AttahAllah":13,"Muhammad Saleh":10,"Noor Fakhri":4},"by_model":{"Emgrand":47,"Coolray":18},"by_source":{"walk-in":58,"phone inquiries":3,"Website":1},"with_deal":13,"by_month":{"2026-07":21,"2026-08":19,"2026-09":25}},"traders":{"n":11,"total":148375000.0},"vin":{"n":29},"dq":{"leads_email_empty":100,"leads_no_phone_dup":257,"leads_no_source":357,"sales_status_not_updated_pct":91.0,"leads_with_note_pct":58.0},"handoff_proxy":{"n":165,"within1h":86,"h1_24":11,"d1_7":8,"over7":60,"late_median_days":29.408680555555556,"late_max_days":44.52430555555555,"batch_oct1":52},"touched":{"n":316,"pct":12.3,"by_layout":{"Events Participators":{"n":357,"t":7},"Phone Inquiries":{"n":1025,"t":149},"Walk-in Leads":{"n":888,"t":93},"Website Forms":{"n":302,"t":67}},"by_owner":{"Abdullah Maytham":{"n":957,"t":177},"Muhammad Saleh":{"n":450,"t":43},"Amna Mustafa":{"n":413,"t":56},"Rania AttahAllah":{"n":383,"t":36},"Noor Fakhri":{"n":230,"t":2}}},"events":{"n":357,"date":"2026-08-16","touched":7,"age":47,"owners":{"Abdullah Maytham":116,"Muhammad Saleh":108,"Amna Mustafa":101,"Rania AttahAllah":32},"name":"Media Test Drive"},"workdays":{"Abdullah Maytham":{"start":"2026-07-01","work_days":80,"active":71},"Muhammad Saleh":{"start":"2026-07-01","work_days":80,"active":63},"Amna Mustafa":{"start":"2026-07-01","work_days":80,"active":64},"Rania AttahAllah":{"start":"2026-07-01","work_days":80,"active":65},"Noor Fakhri":{"start":"2026-08-15","work_days":42,"active":39}},"accounts":[{"a":"crm1","leads":43,"tasks":51,"events":4,"days":1,"last":"2026-09-23","avg_age":8.209302325581396},{"a":"crm2","leads":46,"tasks":415,"events":811,"days":3,"last":"2026-10-02","avg_age":8.369565217391305},{"a":"crm3","leads":1,"tasks":1,"events":0,"days":0,"last":null,"avg_age":1.0},{"a":"crm4","leads":1,"tasks":1,"events":0,"days":0,"last":null,"avg_age":0.0},{"a":"Marketing","leads":45,"tasks":6,"events":322,"days":53,"last":"2026-10-02","avg_age":34.06666666666667}],"recv":{"gross":388354385.0,"cash_return":30301885.0,"lost":97400000.0,"suspect":105265000.0,"nodeal":18200000.0,"review":137187500.0,"likely":137187500.0,"detail":[{"deal":"D 2026 76","rem":101090000.0,"full":22975000.0,"stage":"Adding payments","note":"Records exceed the deal value - likely entry error or duplicate (logical ceiling 22,975,000)","kind":"suspect","age":4,"plausible":22975000.0},{"deal":"D 2026 24","rem":79500000.0,"full":29750000.0,"stage":"Closed lost","note":"Lost deal - cancel the payment record","kind":"lost","age":74},{"deal":"D 2026 29","rem":54300000.0,"full":27150000.0,"stage":"Adding payments","note":"Records exceed the deal value - likely entry error or duplicate (logical ceiling 27,150,000)","kind":"suspect","age":68,"plausible":27150000.0},{"deal":"D 2026 33","rem":24975000.0,"full":25175000.0,"stage":"Delivery","note":"Delivered, payment record not collected","kind":"review","age":57},{"deal":"D 2026 10","rem":22450000.0,"full":25450000.0,"stage":"Delivery","note":"Delivered, payment record not collected","kind":"review","age":83},{"deal":"D 2026 64","rem":18650000.0,"full":18650000.0,"stage":"Delivery","note":"Delivered, payment record not collected","kind":"review","age":10},{"deal":"D 2026 5","rem":17900000.0,"full":17900000.0,"stage":"Closed lost","note":"Lost deal - cancel the payment record","kind":"lost","age":89},{"deal":"D 2026 57","rem":11487500.0,"full":29178250.0,"stage":"Delivery","note":"Delivered, in-house financed - check the financing records","kind":"review","age":10},{"deal":"D 2026 60","rem":9500000.0,"full":26249085.0,"stage":"Delivery","note":"Delivered, in-house financed - check the financing records","kind":"review","age":10}]}};
+const $ = id => document.getElementById(id);
+const n0 = v => Math.round(v).toLocaleString('en-US');
+const n1 = v => (Math.round(v*10)/10).toLocaleString('en-US');
+const pc = (a,b) => b ? Math.round(1000*a/b)/10 : 0;
+const M = v => v>=1e9 ? (Math.round(v/1e7)/100).toLocaleString('en-US')+'B' : n1(v/1e6)+'M';
+const REPS = ['Abdullah Maytham','Muhammad Saleh','Amna Mustafa','Rania AttahAllah','Noor Fakhri'];
+const AGEL = ['0-1','2-3','4-7','8-14','15-30','+30'];
+const AGEN = {'0-1':'0-1 days','2-3':'2-3 days','4-7':'4-7 days','8-14':'8-14 days','15-30':'15-30 days','+30':'30+ days'};
+const AGEC = ['var(--a1)','var(--a2)','var(--a3)','var(--a4)','var(--a5)','var(--a6)'];
+const K = D.kpi, T = D.tasks, U = D.unc_age;
+const notCont = D.lead_status['Not Contacted'];
+const hp = D.handoff_proxy, ev = D.events, rc = D.recv, fin = D.fin;
+const days = x => `${n0(x)} days`;
+
+/* ---------- hero ---------- */
+$('meta').textContent = 'Jul 1 – Oct 2, 2026  ·  Source: Zoho CRM export';
+$('bigN').textContent = D.touched.pct + '%';
+$('bigH').textContent = 'of leads show any follow-up recorded in the CRM';
+$('bigP').textContent = `${n0(D.touched.n)} of ${n0(K.leads)} leads have a changed status or a completed task. Once a lead is worked, sales close well: ${K.won} deals won or delivered at a ${K.win_rate}% win rate.`;
+$('heroBar').innerHTML = `<i style="width:${100*D.touched.n/K.leads}%;background:var(--gold)"></i><i style="flex:1;background:rgba(255,255,255,.16)"></i>`;
+$('heroLab').innerHTML = `<span><span class="k" style="background:var(--gold)"></span><b class="num">${n0(D.touched.n)}</b> with follow-up evidence</span><span><span class="k" style="background:rgba(255,255,255,.3)"></span><b class="num">${n0(K.leads-D.touched.n)}</b> with none</span>`;
+$('kpis').innerHTML = [
+  ['',n0(K.leads),'Leads in three months'],
+  ['ok',`IQD ${M(K.won_val)}`,`${K.won} deals won or delivered`],
+  ['',`${K.win_rate}%`,`Win rate (${K.won} won, ${K.lost} lost)`],
+  ['',`${D.cycle_stats.median} days`,'Median sales cycle'],
+  ['crit',n0(T.overdue),'Overdue follow-up tasks']
+].map(([c,v,l])=>`<div class="kpi ${c}"><div class="v fig">${v}</div><div class="l">${l}</div></div>`).join('');
+
+/* ---------- nav ---------- */
+const SEC = [['s1','Summary'],['s2','Team'],['s3','Timing'],['s4','Sales & collections'],['s5','Marketing'],['s6','Quality & actions']];
+$('nav').innerHTML = SEC.map(([i,t])=>`<a href="#${i}" data-s="${i}">${t}</a>`).join('');
+const links = [...document.querySelectorAll('nav.top a')];
+const io = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.dataset.s===e.target.id))}})},{rootMargin:'-30% 0px -60% 0px'});
+SEC.forEach(([i])=>io.observe($(i)));
+
+/* ---------- helpers ---------- */
+function hbars(items,{fmt=v=>n0(v),color='var(--brand2)',max}={}){
+  const mx = max || Math.max(...items.map(i=>i[1]),1);
+  return items.map(([nm,v,c])=>`<div class="hb"><div class="nm">${nm}</div><div class="t"><i style="width:${Math.max(1,100*v/mx)}%;background:${c||color}"></i></div><div class="vl num">${fmt(v)}</div></div>`).join('');
+}
+function cols(items,{color='var(--brand2)',fmt=v=>n0(v)}={}){
+  const mx = Math.max(...items.map(i=>i[1]),1);
+  return `<div class="cols">${items.map(([l,v,c])=>`<div><div class="v num">${fmt(v)}</div><div class="b" style="height:${Math.max(1,(v/mx)*118)}px;background:${c||color}"></div><div class="x">${l}</div></div>`).join('')}</div>`;
+}
+const stack = (b,tot) => `<div class="stack">${AGEL.map((l,i)=>b[l]?`<i title="${AGEN[l]}: ${b[l]}" style="width:${100*b[l]/tot}%;background:${AGEC[i]}"></i>`:'').join('')}</div>`;
+const legend = () => `<div class="legend">${AGEL.map((l,i)=>`<span style="--c:${AGEC[i]}">${AGEN[l]}</span>`).join('')}</div>`;
+const pill = (t,c) => `<span class="pill ${c}">${t}</span>`;
+const rag = (v,g,a,hi=true) => hi ? (v>=g?'g':v>=a?'a':'r') : (v<=g?'g':v<=a?'a':'r');
+
+/* ---------- findings ---------- */
+const oldShare = pc(U.all['+30'], notCont);
+const crmAcc = D.accounts.filter(a=>['crm1','crm2','crm3','crm4'].includes(a.a));
+const crmHeld = crmAcc.reduce((s,a)=>s+a.leads,0);
+const F = [
+ ['crit','Critical','Follow-up evidence is very thin',`<b>${n0(D.touched.n)}</b> of ${n0(K.leads)} leads (${D.touched.pct}%) have a recorded contact. ${n0(notCont)} leads (${pc(notCont,K.leads)}%) are still "Not Contacted", and <b>${oldShare}%</b> of those are older than 30 days. The Calls module has no records, so we cannot tell whether follow-up happens outside the system.`],
+ ['crit','Critical','Follow-up tasks are piling up',`Only <b>${T.completed}</b> of ${n0(T.total)} tasks (${pc(T.completed,T.total)}%) are completed. <b>${n0(T.overdue)}</b> are overdue by an average of ${n0(T.avg_overdue_days)} days, and ${n0(T.od_b['+30'])} of them are more than 30 days late.`],
+ ['crit','Critical',`The Aug ${ev.date.slice(8)} event: ${ev.n} leads with no follow-up`,`They were imported in one batch and assigned to four reps. After ${ev.age} days only <b>${ev.touched}</b> (${pc(ev.touched,ev.n)}%) show any follow-up, and all of them are still "Pending" at CR.`],
+ ['warn','Warning','Hand-off from CRM to sales is late for a large share',`Of ${hp.n} website leads that CRM finished reviewing, <b>${hp.over7}</b> waited more than a week to be assigned (median ${n0(hp.late_median_days)} days), and ${hp.batch_oct1} were assigned in a single batch on Oct 1. ${n0(D.cr.pending)} leads are still waiting for review, averaging ${n0(D.cr.pending_avg_age)} days.`],
+ ['warn','Warning','Central CRM accounts are barely active',`The accounts crm1, crm2, crm3 and crm4 hold <b>${crmHeld}</b> leads, yet they were active on ${crmAcc.map(a=>a.days).join(' / ')} days respectively. crm3 and crm4 have no activity at all.`],
+ ['warn','Warning','Payment records need cleaning before close',`Uncollected amounts in the system total ${M(rc.gross)}, but ${M(rc.lost)} sit on lost deals and ${M(rc.suspect)} exceed the deal value (entry errors or duplicates). The logical ceiling of what is actually owed is about <b>${M(rc.likely)}</b>.`],
+ ['ok','Positive','Sales are fast and strong once a lead is worked',`${K.won} deals won or delivered worth IQD ${M(K.won_val)}, a ${K.win_rate}% win rate, a median of ${D.conv_stats.median} day from lead to deal and ${D.cycle_stats.median} days to close. The issue is how few leads get worked, not the team's ability to close.`]
+];
+$('findings').innerHTML = F.map(([c,tag,t,p])=>`<div class="find ${c}"><div class="rule"></div><div><h4>${t}<span class="tag">${tag}</span></h4><p>${p}</p></div></div>`).join('');
+
+/* weekly chart */
+(function(){
+  const w = D.weekly, W=560, H=214, pl=34, pr=8, pt=14, pb=34;
+  const mx = Math.max(...w.map(x=>x.leads)), mxd = Math.max(...w.map(x=>x.deals),1);
+  const st = (W-pl-pr)/w.length, bw = st*0.62;
+  const X = i => pl+(i+0.5)*st;
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Weekly leads and deals">`;
+  [0.25,0.5,0.75,1].forEach(g=>{const y=H-pb-(H-pb-pt)*g; s+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--line2)"/><text x="${pl-6}" y="${y+3}" font-size="10" fill="var(--muted)" text-anchor="end">${n0(mx*g)}</text>`;});
+  w.forEach((x,i)=>{const h=(H-pb-pt)*x.leads/mx; s+=`<rect x="${X(i)-bw/2}" y="${H-pb-h}" width="${bw}" height="${h}" rx="3" fill="var(--brand2)" opacity=".88"><title>Week of ${x.w}: ${x.leads} leads, ${x.deals} deals</title></rect>`;
+    if(i%2===0){const d=new Date(x.w); s+=`<text x="${X(i)}" y="${H-pb+16}" font-size="10.5" fill="var(--muted)" text-anchor="middle">${mo[d.getUTCMonth()]} ${d.getUTCDate()}</text>`;}});
+  const p = w.map((x,i)=>`${X(i)},${H-pb-(H-pb-pt)*x.deals/mxd}`).join(' ');
+  s+=`<polyline points="${p}" fill="none" stroke="var(--gold)" stroke-width="2.6" stroke-linejoin="round"/>`;
+  w.forEach((x,i)=>{s+=`<circle cx="${X(i)}" cy="${H-pb-(H-pb-pt)*x.deals/mxd}" r="3.2" fill="var(--gold)"/>`});
+  $('weekly').innerHTML = s+'</svg>' + `<div class="legend"><span style="--c:var(--brand2)">Leads (peak ${mx} a week)</span><span style="--c:var(--gold)">Deals (peak ${mxd} a week)</span></div>`;
+})();
+
+/* funnel */
+(function(){
+  const rows = [['Current leads',K.leads,'var(--brand)'],['With follow-up evidence',D.touched.n,'var(--brand2)'],['Deals created',K.deals,'var(--h3)'],['Won or delivered',K.won,'var(--gold)']];
+  $('funnel').innerHTML = rows.map(([l,v,c],i)=>`<div style="margin:11px 0"><div style="display:flex;justify-content:space-between;font-size:14.5px;margin-bottom:5px"><span>${l}</span><b class="num">${n0(v)}</b></div><div class="stack" style="height:${i===0?26:20}px"><i style="width:${Math.max(1.5,100*v/K.leads)}%;background:${c}"></i></div></div>`).join('')
+   + `<p class="note">Roughly ${K.conv_pct}% of leads plus deals ended up as a deal.</p>`;
+})();
+
+/* ---------- team ---------- */
+const rows = REPS.map(r=>{
+  const lo = D.leads_by_owner.find(x=>x.o===r), tk = D.tasks_by_owner.find(x=>x.o===r), ac = D.activity.find(x=>x.o===r), wd = D.workdays[r], dl = D.deals_by_owner.find(x=>x.o===r), tc = D.touched.by_owner[r];
+  return {r, leads:lo.n, touchedPct:pc(tc.t,tc.n), compPct:tk.comp_pct, overdue:tk.overdue, tasks:tk.total, avgOd:tk.avg_od, activeDays:wd.active, workDays:wd.work_days, actPct:Math.round(100*wd.active/wd.work_days), daysSince:ac.days_since, notes:D.notes_by[r]||0, deals:dl.n, won:dl.won, lost:dl.lost, wonVal:dl.won_val, lostVal:dl.lost_val, winRate:dl.win_rate, medClose:tk.med_close, deferred:tk.deferred, td:D.td.by_owner[r]||0};
+});
+$('score').innerHTML = `<table><thead><tr><th>Rep</th><th class="n">Leads</th><th class="n">Follow-up</th><th class="n">Tasks done</th><th class="n">Overdue (avg late)</th><th class="n">Active days</th><th class="n">Deals W/L</th><th class="n">Sales</th><th class="n">Win rate</th></tr></thead><tbody>` +
+ rows.map(x=>`<tr><td><b>${x.r}</b></td><td class="n num">${n0(x.leads)}</td><td class="n">${pill(x.touchedPct+'%',rag(x.touchedPct,25,10))}</td><td class="n">${pill(x.compPct+'%',rag(x.compPct,30,10))}</td><td class="n num">${n0(x.overdue)} ${pill(Math.round(100*x.overdue/x.tasks)+'%',rag(100*x.overdue/x.tasks,20,50,false))} <span style="color:var(--muted)">(${n0(x.avgOd)}d)</span></td><td class="n">${pill(x.activeDays+' of '+x.workDays,rag(x.actPct,85,70))}</td><td class="n num">${x.won}/${x.lost}</td><td class="n num">${M(x.wonVal)}</td><td class="n">${x.winRate==null?'—':pill(x.winRate+'%',rag(x.winRate,80,65))}</td></tr>`).join('') +
+ `</tbody></table><div class="legend" style="margin-top:12px"><span style="--c:var(--ok)">Good</span><span style="--c:var(--warn)">Fair</span><span style="--c:var(--crit)">Weak</span></div>`;
+
+/* heatmap */
+(function(){
+  const dl = Object.keys(D.calendar[REPS[0]]);
+  const vals = [].concat(...REPS.map(r=>Object.values(D.calendar[r]))).filter(v=>v>0).sort((a,b)=>a-b);
+  const q = p => vals[Math.floor(vals.length*p)] || 1;
+  const t = [q(.25),q(.5),q(.75),q(.92)];
+  const lvl = v => v===0?'var(--h0)':v<=t[0]?'var(--h1)':v<=t[1]?'var(--h2)':v<=t[2]?'var(--h3)':'var(--h4)';
+  const gc = `grid-template-columns:repeat(${dl.length},1fr)`;
+  let html = '';
+  REPS.forEach(r=>{
+    html += `<div class="hrow"><div><b>${r}</b></div><div class="hcells" style="${gc}">` + dl.map(d=>{const dt=new Date(d+'T00:00:00Z'); const fri=dt.getUTCDay()===5; const v=D.calendar[r][d]; return `<div class="hc${fri?' fri':''}" style="${fri?'':'background:'+lvl(v)}" title="${d}: ${v} records"></div>`}).join('') + `</div></div>`;
+  });
+  const mo = {'07':'July','08':'August','09':'September','10':'October'};
+  const marks = ['07','08','09','10'].map(m=>({m,i:dl.findIndex(d=>d.slice(5,7)===m)}));
+  const mh = `<div class="hmonths"><div></div><div style="position:relative;height:18px">` + marks.map(({m,i})=>`<span style="position:absolute;${i/dl.length>0.9?'right:0':'left:'+(100*i/dl.length)+'%'}">${mo[m]}</span>`).join('') + `</div></div>`;
+  $('heat').innerHTML = mh + html + `<div class="legend" style="margin-top:12px"><span style="--c:var(--h0)">None</span><span style="--c:var(--h1)">Light</span><span style="--c:var(--h2)">Medium</span><span style="--c:var(--h3)">High</span><span style="--c:var(--h4)">Heavy</span></div>`;
+})();
+
+/* rep cards */
+(function(){
+  const txt = x => {
+    if(x.r==='Noor Fakhri') return `Started on Aug 15 and works regularly (${x.activeDays} of ${x.workDays} days), but has completed no task, and follow-up evidence on ${n0(x.leads)} leads is only ${x.touchedPct}%.`;
+    if(x.r==='Abdullah Maytham') return `Carries the largest load (${n0(x.leads)} leads) and has the highest follow-up evidence (${x.touchedPct}%). Completed tasks close with a median of ${n1(x.medClose)} days. Most test drives of any rep (${x.td}).`;
+    if(x.r==='Muhammad Saleh') return `Highest sales (${M(x.wonVal)}) and the second-best win rate, but follow-up evidence is ${x.touchedPct}%, only ${x.compPct}% of tasks are completed, and he has the fewest active days among those who started in July.`;
+    if(x.r==='Amna Mustafa') return `Highest task completion (${x.compPct}%) and highest win rate (${x.winRate}%), but tasks close late, with a median of ${n1(x.medClose)} days.`;
+    return `Best documented (${x.notes} notes), but ${x.deferred} tasks are deferred, and she has the most lost deals (${x.lost}, worth ${M(x.lostVal)}) with a ${x.winRate}% win rate.`;
+  };
+  $('reps').innerHTML = rows.map(x=>`<div class="card"><div class="rep"><h4>${x.r}</h4><p>${txt(x)}</p></div></div>`).join('')
+   + `<div class="card"><div class="rep" style="border-color:var(--crit)"><h4>Bottom line</h4><p>No sales rep appears inactive: all five logged activity in the last two days. The gap is in documented completion, where the best task completion rate is ${Math.max(...rows.map(x=>x.compPct))}%. Genuinely missing activity sits with the central CRM accounts below.</p></div></div>`;
+})();
+
+/* accounts */
+(function(){
+  const role = {crm1:'Central CRM team',crm2:'Central CRM team (most tasks deferred)',crm3:'Central CRM team',crm4:'Central CRM team',Marketing:'Website form integration'};
+  $('accounts').innerHTML = `<table><thead><tr><th>Account</th><th>Role</th><th class="n">Leads held</th><th class="n">Their average age</th><th class="n">Tasks</th><th class="n">Active days</th><th class="n">Last activity</th></tr></thead><tbody>` +
+   D.accounts.map(a=>`<tr><td><b>${a.a}</b></td><td>${role[a.a]||''}</td><td class="n num">${a.leads}</td><td class="n num">${n0(a.avg_age)} days</td><td class="n num">${a.tasks}</td><td class="n">${pill(a.days+(a.days===1?' day':' days'),a.days>=20?'g':a.days>=1?'a':'r')}</td><td class="n num">${a.last||'None'}</td></tr>`).join('') + `</tbody></table>`;
+})();
+
+/* ---------- timing ---------- */
+$('uncN').textContent = n0(notCont);
+$('aging').innerHTML = legend() + `<div class="stackrow"><div><b>All reps</b></div>${stack(U.all,notCont)}<div class="num" style="text-align:end">${n0(notCont)}</div></div>` +
+  D.unc_by_owner.map(o=>`<div class="stackrow"><div>${o.o}</div>${stack(o.buckets,o.n)}<div class="num" style="text-align:end">${n0(o.avg)} days</div></div>`).join('') +
+  `<p class="note">The overall median age is ${n0(U.median)} days.</p>`;
+$('taskspeed').innerHTML = `<table><thead><tr><th>Rep</th><th class="n">Completed</th><th class="n">Same day</th><th class="n">Within 3 days</th><th class="n">Over 7 days</th><th class="n">Median</th></tr></thead><tbody>` +
+  D.tasks_by_owner.filter(x=>REPS.includes(x.o)).map(x=>`<tr><td>${x.o}</td><td class="n num">${x.completed}</td><td class="n num">${x.same_day}</td><td class="n num">${x.within3}</td><td class="n num">${x.over7}</td><td class="n num">${x.med_close==null?'—':(x.med_close<0.05?'Instant':n1(x.med_close)+' days')}</td></tr>`).join('') + `</tbody></table><p class="note">"Instant" means the task was logged as completed the moment it was created, which is documentation of a call that already happened.</p>`;
+$('odcap').textContent = `${n0(T.overdue)} tasks are past their due date and not completed; the average is ${n0(T.avg_overdue_days)} days late.`;
+$('overdue').innerHTML = cols([['1-3 days',T.od_b['1-3'],'var(--a2)'],['4-7',T.od_b['4-7'],'var(--a3)'],['8-14',T.od_b['8-14'],'var(--a4)'],['15-30',T.od_b['15-30'],'var(--a5)'],['30+',T.od_b['+30'],'var(--a6)']]);
+$('ho1').innerHTML = hbars([['Within an hour',hp.within1h,'var(--ok)'],['1 to 24 hours',hp.h1_24,'var(--h3)'],['1-7 days',hp.d1_7,'var(--a3)'],['Over a week',hp.over7,'var(--a5)']]) + `<p class="note">Over a week: median ${n0(hp.late_median_days)} days, longest ${n0(hp.late_max_days)} days.</p>`;
+$('ho2').innerHTML = hbars(AGEL.map((l,i)=>[AGEN[l],D.cr.pending_age[l],AGEC[i]])) + `<p class="note">${n0(D.cr.pending)} pending: ${D.cr.by_layout['Events Participators'].pending} from the event and ${D.cr.by_layout['Website Forms'].pending} from the website.</p>`;
+$('ho3').innerHTML = hbars(AGEL.map((l,i)=>[AGEN[l],D.handoff.age_b[l],AGEC[i]])) + `<p class="note">${D.handoff.n} leads, median age ${n1(D.handoff.median_age)} days, and ${D.handoff.over7} of them older than 7 days.</p>`;
+const CS = D.conv_stats, YS = D.cycle_stats;
+$('convcap').textContent = `${CS.n} deals have a conversion date. Median ${CS.median} day, mean ${n1(CS.mean)}, longest ${CS.max}.`;
+$('conv').innerHTML = cols(D.conv_dist.map(x=>[x.l,x.n]),{color:'var(--h3)'});
+$('cyclecap').textContent = `Median ${YS.median} days, mean ${n1(YS.mean)}, longest deal ${YS.max} days as the system calculates it.`;
+$('cycle').innerHTML = cols(D.cycle_dist.map(x=>[x.l,x.n]),{color:'var(--brand2)'});
+
+/* ---------- finance ---------- */
+$('fkpi').innerHTML = [
+  ['ok',`IQD ${M(K.won_val)}`,'Won and delivered',`${K.won} deals, average ${M(K.avg_deal)}`],
+  ['',`IQD ${M(K.open_val)}`,'Deals in progress',`${K.open} deals waiting for payments or reservation`],
+  ['crit',`IQD ${M(K.lost_val)}`,'Value of lost deals',`${K.lost} deals, top reason: out of budget`],
+  ['',`IQD ${M(K.pay_collected)}`,'Payments collected',`From ${K.pay_n} payment records`]
+].map(([c,v,l,s])=>`<div class="kpi ${c}"><div class="v fig">${v}</div><div class="l"><b style="color:var(--ink);font-weight:600">${l}</b><br>${s}</div></div>`).join('');
+const MN = {'2026-07':'July','2026-08':'August','2026-09':'September','2026-10':'October (to Oct 2)'};
+$('rev').innerHTML = cols(D.closing_month.filter(x=>x.v>0).map(x=>[MN[x.m]||x.m, x.v/1e6, 'var(--brand2)']));
+const stClr = s => s==='Closed lost'?'var(--crit)':(s==='Delivery'||s==='Closed won')?'var(--ok)':'var(--brand2)';
+$('stages').innerHTML = D.stage.filter(s=>s.n>0).sort((a,b)=>b.v-a.v).map(s=>`<div class="hb" style="grid-template-columns:minmax(120px,160px) 1fr auto"><div class="nm">${s.s} (${s.n})</div><div class="t"><i style="width:${Math.max(1,100*s.v/1.18e9)}%;background:${stClr(s.s)}"></i></div><div class="vl num">${M(s.v)}</div></div>`).join('');
+$('reccap').textContent = `Payment records marked "Not Collected" total ${M(rc.gross)} IQD in the system. The bars below separate what can actually be owed.`;
+const steps = [['Total uncollected',rc.gross,'var(--brand)'],['On lost deals',-rc.lost,'var(--crit)'],['Above the deal value (error or duplicate)',-rc.suspect,'var(--crit)'],['"Cash Return" records',-rc.cash_return,'var(--a3)'],['Payment with no deal',-rc.nodeal,'var(--a3)'],['Logical ceiling of what is owed',rc.likely,'var(--ok)']];
+$('recon').innerHTML = steps.map(([l,v,c])=>`<div class="hb" style="grid-template-columns:minmax(170px,280px) 1fr auto"><div class="nm">${l}</div><div class="t"><i style="width:${100*Math.abs(v)/rc.gross}%;background:${c}"></i></div><div class="vl num">${v<0?'−':''}${M(Math.abs(v))}</div></div>`).join('');
+$('recdet').innerHTML = `<table><thead><tr><th>Deal</th><th>Stage</th><th class="n">Uncollected records</th><th class="n">Deal value</th><th class="n">Record age</th><th>Note</th></tr></thead><tbody>` +
+  rc.detail.map(d=>`<tr><td><b>${d.deal}</b></td><td>${d.stage}</td><td class="n num">${n0(d.rem)}</td><td class="n num">${n0(d.full)}</td><td class="n num">${d.age} days</td><td class="wrapc">${pill(d.kind==='review'?'Review':d.kind==='lost'?'Cancel':'Correct',d.kind==='review'?'a':'r')} ${d.note}</td></tr>`).join('') + `</tbody></table>`;
+$('fincap').textContent = `${fin.n} contracts backed by promissory notes (PNs), equal to ${fin.share_of_deals_pct}% of won and delivered deals`;
+const FM = {'2026-08':'Aug','2026-09':'Sep','2026-10':'Oct','2026-11':'Nov'};
+$('fin').innerHTML = [['Financed amount',M(fin.amount)],['Total interest',M(fin.interest)],['Combined monthly installment',M(fin.monthly)],['Average number of installments',n0(fin.avg_inst)],['Average cash down payment',n1(fin.avg_cash_pct)+'%'],['Approved / awaiting manager',fin.approved+' / '+fin.waiting]]
+  .map(([l,v])=>`<div class="hb" style="grid-template-columns:1fr auto;margin:8px 0;border-bottom:1px solid var(--line2);padding-bottom:8px"><div>${l}</div><b class="num">${v}</b></div>`).join('')
+  + `<p class="note">First installment due: ${Object.entries(fin.first_by_month).map(([m,c])=>FM[m]+' '+c).join(', ')} contracts.</p>`;
+$('repfin').innerHTML = `<table><thead><tr><th>Rep</th><th class="n">Won</th><th class="n">Value</th><th class="n">Lost</th><th class="n">Lost value</th><th class="n">In progress</th></tr></thead><tbody>` +
+  D.deals_by_owner.map(d=>`<tr><td>${d.o}</td><td class="n num">${d.won}</td><td class="n num">${M(d.won_val)}</td><td class="n num">${d.lost}</td><td class="n num">${d.lost_val?M(d.lost_val):'—'}</td><td class="n num">${d.open_val?M(d.open_val):'—'}</td></tr>`).join('') + `</tbody></table>`;
+
+/* ---------- marketing ---------- */
+(function(){
+  const lt = {'Phone Inquiries':'Phone inquiries','Walk-in Leads':'Showroom walk-ins','Website Forms':'Website forms','Events Participators':'Event participants'};
+  const rws = Object.entries(D.touched.by_layout).sort((a,b)=>b[1].n-a[1].n);
+  const mx = rws[0][1].n;
+  $('layout').innerHTML = rws.map(([k,v])=>`<div style="margin:15px 0"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14.5px;margin-bottom:6px"><span>${lt[k]}</span><span class="num"><b>${n0(v.n)}</b> &nbsp;·&nbsp; follow-up ${pill(pc(v.t,v.n)+'%',rag(pc(v.t,v.n),25,10))}</span></div><div class="stack"><i style="width:${100*v.t/mx}%;background:var(--brand)"></i><i style="width:${100*(v.n-v.t)/mx}%;background:var(--line)"></i></div></div>`).join('') + `<div class="legend"><span style="--c:var(--brand)">With follow-up evidence</span><span style="--c:var(--line)">None</span></div>`;
+  const L1 = D.sources.slice(0,6).map(s=>[s.s,s.n]);
+  const L2 = Object.entries(D.deal_source).map(([k,v])=>[k,v]);
+  $('srccmp').innerHTML = `<h3 style="font-size:15px;margin:0 0 4px">Leads by source</h3>${hbars(L1)}<h3 style="font-size:15px;margin:20px 0 4px">Deals by source</h3>${hbars(L2,{color:'var(--gold)'})}`;
+  const tl = Object.values(D.lost_reason_leads).reduce((a,b)=>a+b,0);
+  const fb = (D.lost_reason_leads['Unsuitable Finance Options']||0)+(D.lost_reason_leads['Vehicles out of Budget']||0);
+  $('lostcap').textContent = `${tl} leads lost; finance and budget account for ${pc(fb,tl)}%`;
+  $('lostL').innerHTML = hbars(Object.entries(D.lost_reason_leads).slice(0,7),{color:'var(--a4)'});
+  const td_ = Object.values(D.lost_reason_deals).reduce((a,b)=>a+b,0);
+  $('lostdcap').textContent = `${td_} lost deals with a recorded reason`;
+  $('lostD').innerHTML = hbars(Object.entries(D.lost_reason_deals),{color:'var(--crit)'});
+  $('tdcap').textContent = `${D.td.n} test drives; ${D.td.with_deal} (${pc(D.td.with_deal,D.td.n)}%) are linked to a deal`;
+  $('td').innerHTML = hbars(Object.entries(D.td.by_owner)) + `<p class="note">${D.td.by_model.Emgrand} on the Emgrand and ${D.td.by_model.Coolray} on the Coolray; ${D.td.by_source['walk-in']} came from showroom walk-ins.</p>`;
+})();
+
+/* ---------- quality & recs ---------- */
+const dq = [
+ ['crit','Calls','No calls are logged'],
+ ['crit','Invoices',`Only one invoice against ${K.won} won deals`],
+ ['crit','Appointments','No appointments are logged'],
+ ['warn','Sales status not updated',`${D.dq.sales_status_not_updated_pct}% of leads are still "Not Contacted"`],
+ ['warn','Leads without a source',`${D.dq.leads_no_source} leads have no Lead Source`],
+ ['warn','Possible duplicates',`${D.dups} leads are flagged as duplicates (${pc(D.dups,K.leads)}%)`],
+ ['warn','Email','Empty in every record'],
+ ['warn','Far-off task dates',`${T.future_due_beyond_2026} tasks are due after 2026, up to September 2027`],
+ ['warn','Deals created after the fact','Deals are often created on or after the delivery date, in some cases weeks later']
+];
+$('dq').innerHTML = dq.map(([c,t,p])=>`<div style="display:grid;grid-template-columns:76px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--line2)"><div>${pill(c==='crit'?'Critical':'Warning',c==='crit'?'r':'a')}</div><div><b style="font-size:15px">${t}</b><p style="margin:0;font-size:14px;color:var(--muted)">${p}</p></div></div>`).join('');
+const recs = [
+ ['Turn on call logging','Connect phone and WhatsApp to Zoho, or require every call to be logged. Without it, time to first contact and individual performance cannot be judged.'],
+ ['Set a first-contact deadline','For example one hour for website and phone leads and 24 hours for event leads, with an automatic alert to the manager when it is missed.'],
+ ['Clear the overdue tasks',`Review the ${n0(T.overdue)} overdue tasks within two weeks: close, defer with a reason, or cancel. Then send each rep a daily overdue report.`],
+ ['Plan for the Aug 16 event leads','A focused calling push on all 357, a fair redistribution among reps, and a measured result after two weeks.'],
+ ['Assign as soon as CRM review ends','No lead stays with a crm or Marketing account for more than a day. Assign or retire crm3 and crm4.'],
+ ['Clean payment records before the close','Cancel records on lost deals, correct D 2026 76 and D 2026 29, and add a control that stops payments from exceeding the deal value.'],
+ ['Start using invoices','Tie revenue to an invoice for every delivered deal, so the CFO can reconcile sales to billing.'],
+ ['Update sales status automatically','Change it on the first completed task or call, so follow-up indicators become trustworthy.']
+];
+$('recs').innerHTML = recs.map(([t,p],i)=>`<div class="rec"><div class="k">${i+1}</div><div><h4>${t}</h4><p>${p}</p></div></div>`).join('');
+</script>
+</body>
+</html>
